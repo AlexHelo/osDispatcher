@@ -90,13 +90,13 @@ export default function BasicTextFields() {
 
     //Calcular nombre
     for (let index = 0; index < premade.length; index++) {
-      var Name = premade[i][0]
+      var Name = premade[index][0]
     }
     // Calcular TCC
     //Calcular TE
 
     for (let index = 0; index < premade.length; index++) {
-      var TE = premade[i][1]
+      var TE = premade[index][1]
     }
     //Calcular TVC
     //Calcular TB
