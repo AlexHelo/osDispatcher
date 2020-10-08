@@ -19,12 +19,97 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BasicTextFields() {
-  const classes = useStyles();
-  const [num, setNum] = React.useState('');
 
-  const handleChange = (event) => {
+  var B = ['B', 300, 2, 0];
+  var D = ['D', 100, 2, 0];
+  var F = ['F', 500, 3, 0];
+  var H = ['H', 700, 4, 0];
+  var J = ['J', 300, 2, 1500];
+  var L = ['L', 3000, 5, 1500];
+  var N = ['N', 50, 2, 1500];
+  var O = ['O', 600, 3, 1500];
+  var A = ['A', 400, 2, 3000];
+  var C = ['C', 50, 2, 3000];
+  var E = ['E', 1000, 5, 3000];
+  var G = ['G', 10, 2, 3000];
+  var I = ['I', 450, 3, 3000];
+  var K = ['K', 100, 2, 4000];
+  var M = ['M', 80, 2, 4000];
+  var P = ['P', 800, 4, 4000];
+  var NN = ['NN', 500, 3, 8000];
+
+  let premade = [
+    B,
+    D,
+    F,
+    H,
+    J,
+    L,
+    N,
+    O,
+    A,
+    C,
+    E,
+    G,
+    I,
+    K,
+    M,
+    P,
+    NN
+  ];
+
+  var isEmpty = false;
+
+  const classes = useStyles();
+
+
+  const [num, setNum] = React.useState('');
+  const [quantum, setQuantum] = React.useState('');
+  const [block, setBlock] = React.useState('');
+  const [time, setTime] = React.useState('');
+
+
+  const handleNumChange = (event) => {
     setNum(event.target.value);
   };
+
+  const handleQuantumChange = (event) => {
+    setQuantum(parseInt(event.target.value));
+  };
+
+  const handleBlockChange = (event) => {
+    setBlock(parseInt(event.target.value));
+  };
+
+  const handleTimeChange = (event) => {
+    setTime(parseInt(event.target.value));
+  };
+
+  const handleClick = (event) => {
+    console.table(premade);
+
+    //Calcular nombre
+    for (let index = 0; index < premade.length; index++) {
+      var Name = premade[i][0]
+    }
+    // Calcular TCC
+    //Calcular TE
+
+    for (let index = 0; index < premade.length; index++) {
+      var TE = premade[i][1]
+    }
+    //Calcular TVC
+    //Calcular TB
+    //Calcular TT
+    //Calcular TI
+    //Calcular TF
+
+
+
+  };
+
+  let isNum = false;
+
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -35,7 +120,7 @@ export default function BasicTextFields() {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={num}
-          onChange={handleChange}
+          onChange={handleNumChange}
         >
           <MenuItem value={1}>1</MenuItem>
           <MenuItem value={2}>2</MenuItem>
@@ -48,10 +133,12 @@ export default function BasicTextFields() {
           <MenuItem value={9}>9</MenuItem>
         </Select>
       </FormControl>
-      <TextField required id="outlined-basic" label="Quantums" variant="outlined" />
-      <TextField required id="outlined-basic" label="Bloqueo" variant="outlined" />
-      <TextField required id="outlined-basic" label="Cambio" variant="outlined" />
-      <Button variant="outlined">Calcular</Button>
+
+      {/* <TextField required id="outlined-basic" label="Microprocesadores" variant="outlined" /> */}
+      <TextField required error={isNum} id="outlined-basic" value={quantum} onChange={handleQuantumChange} label="Quantums" variant="outlined" />
+      <TextField required id="outlined-basic" value={block} onChange={handleBlockChange} label="Bloqueo" variant="outlined" />
+      <TextField required id="outlined-basic" value={time} onChange={handleTimeChange} label="Cambio" variant="outlined" />
+      <Button variant="outlined" onClick={handleClick}>Calcular</Button>
     </form>
   );
-}
+};
