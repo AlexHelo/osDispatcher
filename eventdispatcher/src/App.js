@@ -58,10 +58,25 @@ export default function BasicTextFields() {
     NN
   ];
 
+
+  let allProcess = [];
   var isEmpty = false;
+
+  var lastMicro = 0;
 
   const classes = useStyles();
 
+  var Name;
+  var TCC;
+  var TF;
+  var TVC;
+  var TE;
+  var TB;
+  var TT;
+  var TI;
+  var TF;
+
+  var totalTime = 0;
 
   const [num, setNum] = React.useState('');
   const [quantum, setQuantum] = React.useState('');
@@ -86,25 +101,72 @@ export default function BasicTextFields() {
   };
 
   const handleClick = (event) => {
+
+
+
+    for (let i = 0; i < premade.length; i++) {
+
+      //Calcular nombre
+      Name = premade[i][0]
+
+      // Calcular TCC
+
+      if (i == 0) {
+        TCC = 0;
+      }
+      else if (premade[i][3] > totalTime) {
+        TCC = 0;
+      }
+      else if (premade[i][3] <= totalTime) {
+        TCC = time;
+      }
+      else {
+        TCC = "Error"
+      }
+
+
+      //Calcular TE
+
+      TE = premade[i][1]
+
+      //Calcular TVC
+
+      TVC = (Math.ceil(parseInt(premade[i][1]) / quantum) - 1) * time;
+
+      //Calcular TB
+
+      TB = parseInt(premade[i][2]) * block
+
+      //Calcular TT
+
+      TT = TCC + TE + TVC + TB;
+
+      //Calcular TI
+
+      if (i == 0) {
+        TI = 0;
+      }
+      else if (premade[i][3] > TF) {
+        TI = premade[i][3];
+      }
+      else {
+        TI = TF;
+      }
+
+      //Calcular TF
+
+      TF = TT + TI;
+
+      totalTime = TF;
+
+
+      var currentProcess = [Name, TCC, TE, TVC, TB, TT, TI, TF];
+
+      allProcess.push(currentProcess);
+    }
+
     console.table(premade);
-
-    //Calcular nombre
-    for (let index = 0; index < premade.length; index++) {
-      var Name = premade[index][0]
-    }
-    // Calcular TCC
-    //Calcular TE
-
-    for (let index = 0; index < premade.length; index++) {
-      var TE = premade[index][1]
-    }
-    //Calcular TVC
-    //Calcular TB
-    //Calcular TT
-    //Calcular TI
-    //Calcular TF
-
-
+    console.table(allProcess);
 
   };
 
