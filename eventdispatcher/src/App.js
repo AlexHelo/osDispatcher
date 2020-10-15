@@ -1,5 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  makeStyles
+} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -102,7 +104,7 @@ export default function BasicTextFields() {
 
   const handleClick = (event) => {
 
-
+    let allMicros = [];
 
     for (let i = 0; i < premade.length; i++) {
 
@@ -113,14 +115,11 @@ export default function BasicTextFields() {
 
       if (i == 0) {
         TCC = 0;
-      }
-      else if (premade[i][3] > totalTime) {
+      } else if (premade[i][3] > totalTime) {
         TCC = 0;
-      }
-      else if (premade[i][3] <= totalTime) {
+      } else if (premade[i][3] <= totalTime) {
         TCC = time;
-      }
-      else {
+      } else {
         TCC = "Error"
       }
 
@@ -145,11 +144,9 @@ export default function BasicTextFields() {
 
       if (i == 0) {
         TI = 0;
-      }
-      else if (premade[i][3] > TF) {
+      } else if (premade[i][3] > TF) {
         TI = premade[i][3];
-      }
-      else {
+      } else {
         TI = TF;
       }
 
@@ -163,44 +160,124 @@ export default function BasicTextFields() {
       var currentProcess = [Name, TCC, TE, TVC, TB, TT, TI, TF];
 
       allProcess.push(currentProcess);
+
+      for (let j = 0; j < num; j++) {
+
+        if (allMicros[j] == null) {
+
+          allMicros[j] = [currentProcess];
+
+          break;
+        }
+      }
+
+
     }
 
-    console.table(premade);
+
+    // var aaa = ["Name", "TCC", "TE", "TVC", "TB", "TT", "TI", "TF"];
+    // allMicros[0].push(aaa);
+
+    // console.table(premade);
     console.table(allProcess);
+    console.table(allMicros);
 
   };
 
   let isNum = false;
 
 
-  return (
-    <form className={classes.root} noValidate autoComplete="off">
+  return (<
+        form className={
+      classes.root
+    }
+    noValidate autoComplete="off" >
 
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Microprocesadores</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
+    <
+        FormControl variant="outlined"
+      className={
+        classes.formControl
+      } >
+      <
+        InputLabel id="demo-simple-select-label" > Microprocesadores < /InputLabel> <
+        Select labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={num}
-          onChange={handleNumChange}
-        >
-          <MenuItem value={1}>1</MenuItem>
-          <MenuItem value={2}>2</MenuItem>
-          <MenuItem value={3}>3</MenuItem>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={5}>5</MenuItem>
-          <MenuItem value={6}>6</MenuItem>
-          <MenuItem value={7}>7</MenuItem>
-          <MenuItem value={8}>8</MenuItem>
-          <MenuItem value={9}>9</MenuItem>
-        </Select>
-      </FormControl>
+          value={
+            num
+          }
+          onChange={
+            handleNumChange
+          } >
+          <
+        MenuItem value={
+              1
+            } > 1 < /MenuItem> <
+        MenuItem value={
+                2
+              } > 2 < /MenuItem> <
+        MenuItem value={
+                  3
+                } > 3 < /MenuItem> <
+        MenuItem value={
+                    4
+                  } > 4 < /MenuItem> <
+        MenuItem value={
+                      5
+                    } > 5 < /MenuItem> <
+        MenuItem value={
+                        6
+                      } > 6 < /MenuItem> <
+        MenuItem value={
+                          7
+                        } > 7 < /MenuItem> <
+        MenuItem value={
+                            8
+                          } > 8 < /MenuItem> <
+        MenuItem value={
+                              9
+                            } > 9 < /MenuItem> <
+        /Select> <
+        /FormControl>
 
-      {/* <TextField required id="outlined-basic" label="Microprocesadores" variant="outlined" /> */}
-      <TextField required error={isNum} id="outlined-basic" value={quantum} onChange={handleQuantumChange} label="Quantums" variant="outlined" />
-      <TextField required id="outlined-basic" value={block} onChange={handleBlockChange} label="Bloqueo" variant="outlined" />
-      <TextField required id="outlined-basic" value={time} onChange={handleTimeChange} label="Cambio" variant="outlined" />
-      <Button variant="outlined" onClick={handleClick}>Calcular</Button>
-    </form>
-  );
+        {
+            /* <TextField required id="outlined-basic" label="Microprocesadores" variant="outlined" /> */} <
+                              TextField required error={
+                                isNum
+                              }
+                              id="outlined-basic"
+                              value={
+                                quantum
+                              }
+                              onChange={
+                                handleQuantumChange
+                              }
+                              label="Quantums"
+                              variant="outlined" />
+                            <
+                              TextField required id="outlined-basic"
+                              value={
+                                block
+                              }
+                              onChange={
+                                handleBlockChange
+                              }
+                              label="Bloqueo"
+                              variant="outlined" />
+                            <
+                              TextField required id="outlined-basic"
+                              value={
+                                time
+                              }
+                              onChange={
+                                handleTimeChange
+                              }
+                              label="Cambio"
+                              variant="outlined" />
+                            <
+        Button variant="outlined"
+                              onClick={
+                                handleClick
+                              } > Calcular < /Button> <
+        /form>
+    );
 };
