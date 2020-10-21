@@ -163,7 +163,7 @@ export default function BasicTextFields() {
 
       for (let j = 0; j < num; j++) {
 
-        if (allMicros[j] == null) {
+        if (allMicros[j] == null || currentProcess[6] > allMicros[j][7]) {
 
           allMicros[j] = [currentProcess];
 
@@ -174,6 +174,8 @@ export default function BasicTextFields() {
 
     }
 
+    console.log(allMicros[0][0][7])
+    allMicros[0].push(currentProcess);
 
     // var aaa = ["Name", "TCC", "TE", "TVC", "TB", "TT", "TI", "TF"];
     // allMicros[0].push(aaa);
