@@ -59,15 +59,14 @@ export default function BasicTextFields() {
     P,
     NN
   ];
-
-
   let allProcess = [];
   var isEmpty = false;
 
   var lastMicro = 0;
 
   const classes = useStyles();
-
+  var lowest;
+  var lowestMicro;
   var Name;
   var TCC;
   var TF;
@@ -105,6 +104,10 @@ export default function BasicTextFields() {
   const handleClick = (event) => {
 
     let allMicros = [];
+    for(let i = 0; i < num; i++){
+      allMicros[i] = [0,0,0,0,0,0,0,0]
+    }
+
 
     for (let i = 0; i < premade.length; i++) {
 
@@ -141,7 +144,6 @@ export default function BasicTextFields() {
       TT = TCC + TE + TVC + TB;
 
       //Calcular TI
-
       if (i == 0) {
         TI = 0;
       } else if (premade[i][3] > TF) {
@@ -149,6 +151,7 @@ export default function BasicTextFields() {
       } else {
         TI = TF;
       }
+
 
       //Calcular TF
 
@@ -160,22 +163,33 @@ export default function BasicTextFields() {
       var currentProcess = [Name, TCC, TE, TVC, TB, TT, TI, TF];
 
       allProcess.push(currentProcess);
-
+      
+      
       for (let j = 0; j < num; j++) {
-
-        if (allMicros[j] == null || currentProcess[6] > allMicros[j][7]) {
-
-          allMicros[j] = [currentProcess];
-
+        if(num == 1){
           break;
         }
+        if (i == 0) {
+          allMicros[j] = [currentProcess];
+          lowest = currentProcess[7];
+          lowestMicro = j;
+          break;  
+        }else if(currentProcess[7] < lowest){
+          lowest = currentProcess[7];
+          lowestMicro = j;
+        }else{
+          continue;
+        }
+        
+
       }
+      allMicros[lowestMicro].push(currentProcess);
+      console.log(allMicros)
 
 
     }
 
-    console.log(allMicros[0][0][7])
-    allMicros[0].push(currentProcess);
+    console.log(allMicros)
 
     // var aaa = ["Name", "TCC", "TE", "TVC", "TB", "TT", "TI", "TF"];
     // allMicros[0].push(aaa);
