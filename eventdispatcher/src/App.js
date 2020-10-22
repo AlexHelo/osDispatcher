@@ -66,7 +66,10 @@ export default function BasicTextFields() {
 
   const classes = useStyles();
   var lowest;
+  var highest;
+  var highestMicro;
   var lowestMicro;
+  var microToAsign;
   var Name;
   var TCC;
   var TF;
@@ -109,18 +112,45 @@ export default function BasicTextFields() {
     }
     console.table(allMicros);
     for (let i = 0; i < premade.length; i++) {
-      
-      for (let j = 0; j < num; j++) {
-         if(num == 1){
-           break;
-         }
-         if (i == 0) {
-          break;  
-        } else if(allMicros[j][allMicros[j].length - 1][7] < lowest){
-           lowest = allMicros[j][allMicros[j].length - 1][7];
-           lowestMicro = j;
-         }
+      let allAvailable = true;
+      for(let k = 0; k < num ; k++){
+        if(premade[i][3] < allMicros[k][allMicros[k].length - 1][7]){
+          allAvailable = false;
+        } 
       }
+      if (!allAvailable){
+        for (let j = 0; j < num; j++) {
+          if(num == 1){
+            break;
+          }
+          if (i == 0) {
+           break;
+ 
+         }
+          if (allMicros[j][allMicros[j].length - 1][7] < lowest){
+             lowest = allMicros[j][allMicros[j].length - 1][7];
+             lowestMicro = j;
+             microToAsign = lowestMicro;
+         } else if(allMicros[j][allMicros[j].length - 1][7] > highest){
+             highest = allMicros[j][allMicros[j].length - 1][7]
+             highestMicro = j;
+             
+         }
+        }
+      }else {
+        for (let k = 0; k< num; k++){
+          if (premade[i][3] > allMicros[k][allMicros[k].length - 1][7]){
+            microToAsign = k;
+            break;
+          }
+        }
+      }
+      
+        
+       
+     
+      
+      console.log(highest);
       console.log(lowestMicro);
 
       //Calcular nombre
@@ -175,13 +205,17 @@ export default function BasicTextFields() {
       var currentProcess = [Name, TCC, TE, TVC, TB, TT, TI, TF];
 
       allProcess.push(currentProcess);
+
       if (i == 0) {
         allMicros[0] = [currentProcess];
         lowest = currentProcess[7];
+        highest = currentProcess[7];
         lowestMicro = 0;
-      
+      }
+      else if (allAvailable){
+        allMicros[microToAsign].push(currentProcess);
       }else{
-        allMicros[lowestMicro].push(currentProcess);
+        allMicros[microToAsign].push(currentProcess);
         lowest = allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]
       }
       
