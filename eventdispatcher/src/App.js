@@ -105,11 +105,23 @@ export default function BasicTextFields() {
 
     let allMicros = [];
     for(let i = 0; i < num; i++){
-      allMicros[i] = [0,0,0,0,0,0,0,0]
+      allMicros[i] = [[0,0,0,0,0,0,0,0]];
     }
-
-
+    console.table(allMicros);
     for (let i = 0; i < premade.length; i++) {
+      
+      for (let j = 0; j < num; j++) {
+         if(num == 1){
+           break;
+         }
+         if (i == 0) {
+          break;  
+        } else if(allMicros[j][allMicros[j].length - 1][7] < lowest){
+           lowest = allMicros[j][allMicros[j].length - 1][7];
+           lowestMicro = j;
+         }
+      }
+      console.log(lowestMicro);
 
       //Calcular nombre
       Name = premade[i][0]
@@ -118,14 +130,13 @@ export default function BasicTextFields() {
 
       if (i == 0) {
         TCC = 0;
-      } else if (premade[i][3] > totalTime) {
+      } else if (premade[i][3] >= allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]) {
         TCC = 0;
-      } else if (premade[i][3] <= totalTime) {
+      } else if (premade[i][3] < allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]) {
         TCC = time;
       } else {
         TCC = "Error"
       }
-
 
       //Calcular TE
 
@@ -146,10 +157,10 @@ export default function BasicTextFields() {
       //Calcular TI
       if (i == 0) {
         TI = 0;
-      } else if (premade[i][3] > TF) {
+      } else if (premade[i][3] > allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]) {
         TI = premade[i][3];
       } else {
-        TI = TF;
+        TI = allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7];
       }
 
 
@@ -159,45 +170,37 @@ export default function BasicTextFields() {
 
       totalTime = TF;
 
+      
 
       var currentProcess = [Name, TCC, TE, TVC, TB, TT, TI, TF];
 
       allProcess.push(currentProcess);
+      if (i == 0) {
+        allMicros[0] = [currentProcess];
+        lowest = currentProcess[7];
+        lowestMicro = 0;
       
-      
-      for (let j = 0; j < num; j++) {
-        if(num == 1){
-          break;
-        }
-        if (i == 0) {
-          allMicros[j] = [currentProcess];
-          lowest = currentProcess[7];
-          lowestMicro = j;
-          break;  
-        }else if(currentProcess[7] < lowest){
-          lowest = currentProcess[7];
-          lowestMicro = j;
-        }else{
-          continue;
-        }
-        
-
+      }else{
+        allMicros[lowestMicro].push(currentProcess);
+        lowest = allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]
       }
-      allMicros[lowestMicro].push(currentProcess);
-      console.log(allMicros)
+      
+      //console.log(allMicros)
 
 
+    
     }
-
-    console.log(allMicros)
-
     // var aaa = ["Name", "TCC", "TE", "TVC", "TB", "TT", "TI", "TF"];
     // allMicros[0].push(aaa);
 
     // console.table(premade);
-    console.table(allProcess);
-    console.table(allMicros);
-
+    if (num == 1){
+      console.table(allProcess);
+    }else{
+      console.table(allMicros);
+    }
+    
+    
   };
 
   let isNum = false;
