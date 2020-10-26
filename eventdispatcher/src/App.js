@@ -113,12 +113,24 @@ export default function BasicTextFields() {
     console.table(allMicros);
     for (let i = 0; i < premade.length; i++) {
       let allAvailable = true;
+      let valuesAdd = 0;
       for(let k = 0; k < num ; k++){
         if(premade[i][3] < allMicros[k][allMicros[k].length - 1][7]){
           allAvailable = false;
-        } 
+        } else{
+          if (allMicros[k][allMicros[k].length - 1][7] != 0)
+            valuesAdd = valuesAdd + 1;
+        }
       }
       if (!allAvailable){
+        if (valuesAdd >= 1){
+          for (let k = 0; k< num; k++){
+            if (premade[i][3] > allMicros[k][allMicros[k].length - 1][7]){
+              microToAsign = k;
+              break;
+            }
+          }
+        }
         for (let j = 0; j < num; j++) {
           if(num == 1){
             break;
@@ -130,7 +142,7 @@ export default function BasicTextFields() {
           if (allMicros[j][allMicros[j].length - 1][7] < lowest){
              lowest = allMicros[j][allMicros[j].length - 1][7];
              lowestMicro = j;
-             microToAsign = lowestMicro;
+             
          } else if(allMicros[j][allMicros[j].length - 1][7] > highest){
              highest = allMicros[j][allMicros[j].length - 1][7]
              highestMicro = j;
@@ -145,7 +157,9 @@ export default function BasicTextFields() {
           }
         }
       }
-      
+      if (valuesAdd < 1){
+        microToAsign = lowestMicro;
+      }
         
        
      
@@ -228,6 +242,11 @@ export default function BasicTextFields() {
     // allMicros[0].push(aaa);
 
     // console.table(premade);
+    for (let i = 0; i < num; i++){
+      if (i != 0){ 
+        allMicros[i].shift();
+      }
+    }
     if (num == 1){
       console.table(allProcess);
     }else{
