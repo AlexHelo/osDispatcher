@@ -9,6 +9,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +24,10 @@ const useStyles = makeStyles((theme) => ({
       width: '25ch',
 
     },
+
+
   },
+
 }));
 
 export default function BasicTextFields() {
@@ -86,7 +96,7 @@ export default function BasicTextFields() {
   const [quantum, setQuantum] = React.useState('');
   const [block, setBlock] = React.useState('');
   const [time, setTime] = React.useState('');
-
+  const [micros, setMicros] = React.useState([]);
 
   const handleNumChange = (event) => {
     setNum(event.target.value);
@@ -106,64 +116,66 @@ export default function BasicTextFields() {
 
   const handleClick = (event) => {
 
+
     let allMicros = [];
-    for(let i = 0; i < num; i++){
-      allMicros[i] = [[0,0,0,0,0,0,0,0]];
+
+    for (let i = 0; i < num; i++) {
+      allMicros[i] = [[0, 0, 0, 0, 0, 0, 0, 0]];
     }
     console.table(allMicros);
     for (let i = 0; i < premade.length; i++) {
       let allAvailable = true;
       let valuesAdd = 0;
-      for(let k = 0; k < num ; k++){
-        if(premade[i][3] < allMicros[k][allMicros[k].length - 1][7]){
+      for (let k = 0; k < num; k++) {
+        if (premade[i][3] < allMicros[k][allMicros[k].length - 1][7]) {
           allAvailable = false;
-        } else{
+        } else {
           if (allMicros[k][allMicros[k].length - 1][7] != 0)
             valuesAdd = valuesAdd + 1;
         }
       }
-      if (!allAvailable){
-        if (valuesAdd >= 1){
-          for (let k = 0; k< num; k++){
-            if (premade[i][3] > allMicros[k][allMicros[k].length - 1][7]){
+      if (!allAvailable) {
+        if (valuesAdd >= 1) {
+          for (let k = 0; k < num; k++) {
+            if (premade[i][3] > allMicros[k][allMicros[k].length - 1][7]) {
               microToAsign = k;
               break;
             }
           }
         }
         for (let j = 0; j < num; j++) {
-          if(num == 1){
+          if (num == 1) {
             break;
           }
           if (i == 0) {
-           break;
- 
-         }
-          if (allMicros[j][allMicros[j].length - 1][7] < lowest){
-             lowest = allMicros[j][allMicros[j].length - 1][7];
-             lowestMicro = j;
-             
-         } else if(allMicros[j][allMicros[j].length - 1][7] > highest){
-             highest = allMicros[j][allMicros[j].length - 1][7]
-             highestMicro = j;
-             
-         }
+            break;
+
+          }
+          if (allMicros[j][allMicros[j].length - 1][7] < lowest) {
+            lowest = allMicros[j][allMicros[j].length - 1][7];
+            lowestMicro = j;
+
+          } else if (allMicros[j][allMicros[j].length - 1][7] > highest) {
+            highest = allMicros[j][allMicros[j].length - 1][7]
+            highestMicro = j;
+
+          }
         }
-      }else {
-        for (let k = 0; k< num; k++){
-          if (premade[i][3] > allMicros[k][allMicros[k].length - 1][7]){
+      } else {
+        for (let k = 0; k < num; k++) {
+          if (premade[i][3] > allMicros[k][allMicros[k].length - 1][7]) {
             microToAsign = k;
             break;
           }
         }
       }
-      if (valuesAdd < 1){
+      if (valuesAdd < 1) {
         microToAsign = lowestMicro;
       }
-        
-       
-     
-      
+
+
+
+
       console.log(highest);
       console.log(lowestMicro);
 
@@ -214,7 +226,7 @@ export default function BasicTextFields() {
 
       totalTime = TF;
 
-      
+
 
       var currentProcess = [Name, TCC, TE, TVC, TB, TT, TI, TF];
 
@@ -226,130 +238,120 @@ export default function BasicTextFields() {
         highest = currentProcess[7];
         lowestMicro = 0;
       }
-      else if (allAvailable){
+      else if (allAvailable) {
         allMicros[microToAsign].push(currentProcess);
-      }else{
+      } else {
         allMicros[microToAsign].push(currentProcess);
         lowest = allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]
       }
-      
+
       //console.log(allMicros)
 
 
-    
+
     }
     // var aaa = ["Name", "TCC", "TE", "TVC", "TB", "TT", "TI", "TF"];
     // allMicros[0].push(aaa);
 
     // console.table(premade);
-    for (let i = 0; i < num; i++){
-      if (i != 0){ 
+    for (let i = 0; i < num; i++) {
+      if (i != 0) {
         allMicros[i].shift();
       }
     }
-    if (num == 1){
+
+    if (num == 1) {
       console.table(allProcess);
-    }else{
+    } else {
       console.table(allMicros);
     }
-    
-    
+
+    setMicros(allMicros);
   };
 
   let isNum = false;
 
 
-  return (<
-        form className={
-      classes.root
-    }
-    noValidate autoComplete="off" >
+  return (
 
-    <
-        FormControl variant="outlined"
-      className={
-        classes.formControl
-      } >
-      <
-        InputLabel id="demo-simple-select-label" > Microprocesadores < /InputLabel> <
-        Select labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={
-            num
-          }
-          onChange={
-            handleNumChange
-          } >
-          <
-        MenuItem value={
-              1
-            } > 1 < /MenuItem> <
-        MenuItem value={
-                2
-              } > 2 < /MenuItem> <
-        MenuItem value={
-                  3
-                } > 3 < /MenuItem> <
-        MenuItem value={
-                    4
-                  } > 4 < /MenuItem> <
-        MenuItem value={
-                      5
-                    } > 5 < /MenuItem> <
-        MenuItem value={
-                        6
-                      } > 6 < /MenuItem> <
-        MenuItem value={
-                          7
-                        } > 7 < /MenuItem> <
-        MenuItem value={
-                            8
-                          } > 8 < /MenuItem> <
-        MenuItem value={
-                              9
-                            } > 9 < /MenuItem> <
-        /Select> <
-        /FormControl>
+    <div>
+      <form className={classes.root} noValidate autoComplete="off">
 
-        {
-            /* <TextField required id="outlined-basic" label="Microprocesadores" variant="outlined" /> */} <
-                              TextField required error={
-                                isNum
-                              }
-                              id="outlined-basic"
-                              value={
-                                quantum
-                              }
-                              onChange={
-                                handleQuantumChange
-                              }
-                              label="Quantums"
-                              variant="outlined" />
-                            <
-                              TextField required id="outlined-basic"
-                              value={
-                                block
-                              }
-                              onChange={
-                                handleBlockChange
-                              }
-                              label="Bloqueo"
-                              variant="outlined" />
-                            <
-                              TextField required id="outlined-basic"
-                              value={
-                                time
-                              }
-                              onChange={
-                                handleTimeChange
-                              }
-                              label="Cambio"
-                              variant="outlined" />
-                            <
-        Button variant="outlined"
-                              onClick={
-                                handleClick
-                              } > Calcular < /Button> <
-        /form>
-    );
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Microprocesadores</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={num}
+            onChange={handleNumChange}
+          >
+            <MenuItem value={1}>1</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={6}>6</MenuItem>
+            <MenuItem value={7}>7</MenuItem>
+            <MenuItem value={8}>8</MenuItem>
+            <MenuItem value={9}>9</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* <TextField required id="outlined-basic" label="Microprocesadores" variant="outlined" /> */}
+        <TextField required error={isNum} id="outlined-basic" value={quantum} onChange={handleQuantumChange} label="Quantums" variant="outlined" />
+        <TextField required id="outlined-basic" value={block} onChange={handleBlockChange} label="Bloqueo" variant="outlined" />
+        <TextField required id="outlined-basic" value={time} onChange={handleTimeChange} label="Cambio" variant="outlined" />
+        <Button variant="outlined" onClick={handleClick}>Calcular</Button>
+
+
+      </form>
+
+
+      {micros.map((micro, i) => (
+
+        <div>
+          <h3>Micro {i + 1}</h3>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell align="right">TCC</TableCell>
+                  <TableCell align="right">TE</TableCell>
+                  <TableCell align="right">TVC</TableCell>
+                  <TableCell align="right">TB</TableCell>
+                  <TableCell align="right">TT</TableCell>
+                  <TableCell align="right">TI</TableCell>
+                  <TableCell align="right">TF</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {micro.map((process) => (
+                  <TableRow key={process}>
+                    <TableCell component="th" scope="row">
+                      {process[0]}
+                    </TableCell>
+                    <TableCell align="right">{process[1]}</TableCell>
+                    <TableCell align="right">{process[2]}</TableCell>
+                    <TableCell align="right">{process[3]}</TableCell>
+                    <TableCell align="right">{process[4]}</TableCell>
+                    <TableCell align="right">{process[5]}</TableCell>
+                    <TableCell align="right">{process[6]}</TableCell>
+                    <TableCell align="right">{process[7]}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <br></br>
+          <br></br>
+          <br></br>
+        </div>
+
+      ))}
+    </div>
+
+
+
+  );
 };
