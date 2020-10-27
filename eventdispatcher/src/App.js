@@ -127,7 +127,7 @@ export default function BasicTextFields() {
       let allAvailable = true;
       let valuesAdd = 0;
       for (let k = 0; k < num; k++) {
-        if (premade[i][3] < allMicros[k][allMicros[k].length - 1][7]) {
+        if (premade[i][3] <= allMicros[k][allMicros[k].length - 1][7]) {
           allAvailable = false;
         } else {
           if (allMicros[k][allMicros[k].length - 1][7] != 0)
@@ -173,12 +173,6 @@ export default function BasicTextFields() {
         microToAsign = lowestMicro;
       }
 
-
-
-
-      console.log(highest);
-      console.log(lowestMicro);
-
       //Calcular nombre
       Name = premade[i][0]
 
@@ -186,9 +180,9 @@ export default function BasicTextFields() {
 
       if (i == 0) {
         TCC = 0;
-      } else if (premade[i][3] >= allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]) {
+      } else if (premade[i][3] >= allMicros[microToAsign][allMicros[microToAsign].length - 1][7]) {
         TCC = 0;
-      } else if (premade[i][3] < allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]) {
+      } else if (premade[i][3] < allMicros[microToAsign][allMicros[microToAsign].length - 1][7]) {
         TCC = time;
       } else {
         TCC = "Error"
@@ -213,10 +207,11 @@ export default function BasicTextFields() {
       //Calcular TI
       if (i == 0) {
         TI = 0;
-      } else if (premade[i][3] > allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]) {
+      } else if (premade[i][3] > allMicros[microToAsign][allMicros[microToAsign].length - 1][7]) {
         TI = premade[i][3];
+        allMicros[microToAsign].push(['empty','-','-','-','-','-',allMicros[microToAsign][allMicros[microToAsign].length - 1][7],premade[i][3]]);
       } else {
-        TI = allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7];
+        TI = allMicros[microToAsign][allMicros[microToAsign].length - 1][7];
       }
 
 
@@ -242,18 +237,11 @@ export default function BasicTextFields() {
         allMicros[microToAsign].push(currentProcess);
       } else {
         allMicros[microToAsign].push(currentProcess);
-        lowest = allMicros[lowestMicro][allMicros[lowestMicro].length - 1][7]
+        lowest = allMicros[microToAsign][allMicros[microToAsign].length - 1][7]
       }
 
-      //console.log(allMicros)
-
-
-
     }
-    // var aaa = ["Name", "TCC", "TE", "TVC", "TB", "TT", "TI", "TF"];
-    // allMicros[0].push(aaa);
-
-    // console.table(premade);
+    
     for (let i = 0; i < num; i++) {
       if (i != 0) {
         allMicros[i].shift();
@@ -294,6 +282,8 @@ export default function BasicTextFields() {
             <MenuItem value={7}>7</MenuItem>
             <MenuItem value={8}>8</MenuItem>
             <MenuItem value={9}>9</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={100}>100</MenuItem>
           </Select>
         </FormControl>
 
