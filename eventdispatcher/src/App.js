@@ -127,7 +127,7 @@ export default function BasicTextFields() {
       let allAvailable = true;
       let valuesAdd = 0;
       for (let k = 0; k < num; k++) {
-        if (premade[i][3] <= allMicros[k][allMicros[k].length - 1][7]) {
+        if (premade[i][3] < allMicros[k][allMicros[k].length - 1][7]) {
           allAvailable = false;
         } else {
           if (allMicros[k][allMicros[k].length - 1][7] != 0)
@@ -149,7 +149,6 @@ export default function BasicTextFields() {
           }
           if (i == 0) {
             break;
-
           }
           if (allMicros[j][allMicros[j].length - 1][7] < lowest) {
             lowest = allMicros[j][allMicros[j].length - 1][7];
@@ -283,6 +282,7 @@ export default function BasicTextFields() {
             <MenuItem value={7}>7</MenuItem>
             <MenuItem value={8}>8</MenuItem>
             <MenuItem value={9}>9</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
             <MenuItem value={100}>100</MenuItem>
           </Select>
